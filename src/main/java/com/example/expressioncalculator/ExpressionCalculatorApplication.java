@@ -17,7 +17,7 @@ public class ExpressionCalculatorApplication {
 		try {
 			Runtime.getRuntime().exec(new String[]{"cmd", "/c","start chrome http://localhost:8080"});
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			
 		}
 	}
 
