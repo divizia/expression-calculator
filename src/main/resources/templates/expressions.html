@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All expressions</title>
+
+    <style>
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align: center">
+    <button type="button"><a href="create"><b>Create a new expression</b></a></button>
+    <form method="get" role="form" th:action="@{/search}">
+        <div class="form-group">
+            <p>
+                <span>Search expression by result</span>
+                <select th:name="sign">
+                    <option value="=" th:selected="${sign != null && sign.equals('=')}">=</option>
+                    <option value=">" th:selected="${sign != null && sign.equals('>')}">></option>
+                    <option value="<" th:selected="${sign != null && sign.equals('<')}"><</option>
+                </select>
+                <input type="number" placeholder="result" step="0.01" th:name="result" th:value="${result != null ? result : 0}"/>
+                <button type="submit">Search</button>
+            </p>
+        </div>
+    </form>
+
+    <div th:if="${sign != null}" style="color: darkgreen">
+        <p>
+            <span>Active filter: Result [[${sign}]] [[${result}]]</span>
+            <button type="button"><a th:href="@{'/'}">Reset</a></button>
+        </p>
+    </div>
+
+    <table border="1" class="center">
+        <tr>
+            <th>Id</th>
+            <th>Value</th>
+            <th>Amount of numbers</th>
+            <th>Result</th>
+        </tr>
+        <tr th:each="expression : ${expressions}">
+            <td><b><span th:text="${expression.id}"></span></b></td>
+            <td><span th:text="${expression.value}"></span></td>
+            <td><span th:text="${expression.amountOfNumbers}"></span></td>
+            <td><span th:text="${expression.result}"></span></td>
+            <td><a th:href="@{'edit/{id}'(id=${expression.id})}">Edit</a></td>
+            <td><a th:href="@{'delete/{id}'(id=${expression.id})}">Delete</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
